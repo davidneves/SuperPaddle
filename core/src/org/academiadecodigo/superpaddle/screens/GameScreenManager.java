@@ -1,7 +1,6 @@
-package org.academiadecodigo.superpaddle.states;
+package org.academiadecodigo.superpaddle.screens;
 
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.Stack;
 

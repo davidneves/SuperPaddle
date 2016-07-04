@@ -4,8 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import org.academiadecodigo.superpaddle.states.GameScreenManager;
-import org.academiadecodigo.superpaddle.states.MenuScreen;
+import org.academiadecodigo.superpaddle.screens.MenuScreen;
 
 public class SuperPaddle extends Game {
 

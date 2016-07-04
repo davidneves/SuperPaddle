@@ -1,4 +1,4 @@
-package org.academiadecodigo.superpaddle.states;
+package org.academiadecodigo.superpaddle.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

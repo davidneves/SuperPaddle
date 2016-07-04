@@ -1,4 +1,4 @@
-package org.academiadecodigo.superpaddle.states;
+package org.academiadecodigo.superpaddle.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -7,7 +7,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.superpaddle.SuperPaddle;
@@ -25,7 +24,7 @@ public class MenuScreen implements Screen {
     private AssetManager manager;
     private Music music;
 
-    private Texture background;
+    private Texture texture;
 
 
     public MenuScreen(SuperPaddle game, AssetManager manager) {
@@ -41,7 +40,7 @@ public class MenuScreen implements Screen {
         music.setLooping(true);
         music.play();
 
-        background = new Texture("background.jpg");
+        texture = new Texture("start.jpg");
     }
 
 
@@ -72,7 +71,7 @@ public class MenuScreen implements Screen {
 
         game.sb.setProjectionMatrix(cam.combined);
         game.sb.begin();
-        game.sb.draw(background, 0, cam.position.y - cam.viewportHeight / 2);
+        game.sb.draw(texture, 0, cam.position.y - cam.viewportHeight / 2);
 
         game.sb.end();
 

@@ -6,7 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import org.academiadecodigo.superpaddle.SuperPaddle;
-import org.academiadecodigo.superpaddle.states.PlayScreen;
+import org.academiadecodigo.superpaddle.screens.PlayScreen;
 
 /**
  * Created by vi.KING David Neves on 04/07/16.
