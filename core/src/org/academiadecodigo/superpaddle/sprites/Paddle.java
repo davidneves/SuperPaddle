@@ -39,10 +39,10 @@ public class Paddle extends Sprite {
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         Vector2[] vertice = new Vector2[4];
-        vertice[0] = new Vector2(-17,60);
-        vertice[1] = new Vector2(-17,-60);
-        vertice[2] = new Vector2(17,-60);
-        vertice[3] = new Vector2(17, 60);
+        vertice[0] = new Vector2(-7.5f,57);
+        vertice[1] = new Vector2(-7.5f,-57);
+        vertice[2] = new Vector2(7.5f,-57);
+        vertice[3] = new Vector2(7.5f, 57);
         shape.set(vertice);
 
         fdef.filter.categoryBits = SuperPaddle.PADDLE_BIT;
