@@ -49,3 +49,12 @@ public class SuperPaddle extends Game {
 		sb.dispose();
 	}
 }
+
+//TODO: 1 - move paddles according to keyboard input
+//TODO: 2 - add blocks with tiled
+//TODO: 3 - update score according to game
+//TODO: 4 - add game over screen
+//wishlist: move paddles with touch thingy
+//wishlist: add networking! --> implement server-client model
+//wishlist: implement high score using databases
+//wishlist: make it round!
