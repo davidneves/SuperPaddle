@@ -1,40 +1,48 @@
 package org.academiadecodigo.superpaddle;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
-import org.academiadecodigo.superpaddle.states.GameStateManager;
-import org.academiadecodigo.superpaddle.states.MenuState;
+import org.academiadecodigo.superpaddle.states.GameScreenManager;
+import org.academiadecodigo.superpaddle.states.MenuScreen;
 
-public class SuperPaddle extends ApplicationAdapter {
+public class SuperPaddle extends Game {
 
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 480;
+	public static final float PPM = 100;
 	public static final int xCenter = WIDTH / 2;
 	public static final int yCenter = HEIGHT / 2;
 
 	private SpriteBatch sb;
 
-	private GameStateManager gsm;
+	private AssetManager manager;
+
 
 	@Override
 	public void create () {
+
 		sb = new SpriteBatch();
-		gsm = new GameStateManager();
 
-		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+		manager = new AssetManager();
+		manager.load("audio/music.mp3", Music.class);
+		manager.finishLoading();
 
-		gsm.push(new MenuState(gsm));
-
+		setScreen(new MenuScreen(this, manager));
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		gsm.update(Gdx.graphics.getDeltaTime());
-		gsm.render(sb);
+
+		super.render();
+
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		manager.dispose();
+		sb.dispose();
 	}
 }
