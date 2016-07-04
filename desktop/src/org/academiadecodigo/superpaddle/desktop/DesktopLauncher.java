@@ -9,7 +9,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = SuperPaddle.WIDTH;
 		config.height = SuperPaddle.HEIGHT;
-		config.title = "Supper Paddle";
+		config.title = "Super Paddle";
 		new LwjglApplication(new SuperPaddle(), config);
 	}
 }
