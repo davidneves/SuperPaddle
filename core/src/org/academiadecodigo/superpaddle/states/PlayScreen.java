@@ -73,6 +73,10 @@ public class PlayScreen implements Screen {
         creator = new B2WorldCreator(this);
 
         ball = new Ball(this);
+        player1 = new Paddle(this, 40, 100);
+
+        player2 = new Paddle(this, SuperPaddle.WIDTH - 40, SuperPaddle.HEIGHT - 100);
+
 
         world.setContactListener(new BallContactListener());
 
@@ -84,7 +88,7 @@ public class PlayScreen implements Screen {
 
         if (Gdx.input.justTouched()) {
 
-            ball.b2Body.applyForce(new Vector2(MathUtils.random(-100000, 100000), MathUtils.random(-100000, 100000)), ball.b2Body.getWorldCenter(), true);
+            ball.b2Body.applyForce(new Vector2(MathUtils.random(-1000000, 1000000), MathUtils.random(-100000, 100000)), ball.b2Body.getWorldCenter(), true);
         }
     }
 
@@ -94,6 +98,8 @@ public class PlayScreen implements Screen {
         world.step(1/60f, 6, 2);
 
         ball.update(dt);
+        player1.update(dt);
+        player2.update(dt);
 
         hud.update(dt);
 
@@ -122,6 +128,8 @@ public class PlayScreen implements Screen {
         game.sb.begin();
         game.sb.draw(background, 0, gameCam.position.y - gameCam.viewportHeight / 2);
         ball.draw(game.sb);
+        player1.draw(game.sb);
+        player2.draw(game.sb);
 
         game.sb.end();
 
