@@ -12,10 +12,13 @@ public class SuperPaddle extends Game {
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 480;
 	public static final float PPM = 100;
-	public static final int xCenter = WIDTH / 2;
-	public static final int yCenter = HEIGHT / 2;
 
-	private SpriteBatch sb;
+	public static final short EDGE_BIT = 1;
+	public static final short BALL_BIT = 2;
+	public static final short PADDLE_BIT = 4;
+	public static final short BLOCK_BIT = 8;
+
+	public SpriteBatch sb;
 
 	private AssetManager manager;
 

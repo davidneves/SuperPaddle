@@ -25,19 +25,23 @@ public class MenuScreen implements Screen {
     private AssetManager manager;
     private Music music;
 
+    private Texture background;
+
 
     public MenuScreen(SuperPaddle game, AssetManager manager) {
         this.game = game;
         this.manager = manager;
 
         cam = new OrthographicCamera();
-        viewport = new FitViewport(SuperPaddle.WIDTH / SuperPaddle.PPM, SuperPaddle.HEIGHT / SuperPaddle.PPM, cam);
+        viewport = new FitViewport(SuperPaddle.WIDTH, SuperPaddle.HEIGHT, cam);
 
         cam.position.set(viewport.getWorldWidth() / 2, viewport.getScreenHeight() / 2, 0);
 
         music = manager.get("audio/music.mp3", Music.class);
         music.setLooping(true);
         music.play();
+
+        background = new Texture("background.jpg");
     }
 
 
@@ -63,9 +67,15 @@ public class MenuScreen implements Screen {
     public void render(float dt) {
 
         update(dt);
-
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        game.sb.setProjectionMatrix(cam.combined);
+        game.sb.begin();
+        game.sb.draw(background, 0, cam.position.y - cam.viewportHeight / 2);
+
+        game.sb.end();
+
     }
 
 
