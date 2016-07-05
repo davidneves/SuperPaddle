@@ -97,20 +97,23 @@ public class PlayScreen implements Screen {
             ball.b2Body.applyForce(new Vector2(MathUtils.random(-1000000, 1000000), MathUtils.random(-100000, 100000)), ball.b2Body.getWorldCenter(), true);
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W)){
             //player1.b2Body.applyLinearImpulse(new Vector2(0, 100000), player1.b2Body.getWorldCenter(), true);
             player1.b2Body.applyForceToCenter(new Vector2(0, 1000000), true);
-            System.out.println("cima");
-        }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
-            player1.b2Body.applyLinearImpulse(new Vector2(0, -10000), player1.b2Body.getWorldCenter(), true);
-        }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.W)){
-            player2.b2Body.applyForceToCenter(new Vector2(0, 100000), true);
+            System.out.println(" player 1 - cima");
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.S)){
+            player1.b2Body.applyForceToCenter(new Vector2(0, -1000000), true);
+            System.out.println(" player 1 - baixo");
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+            player2.b2Body.applyForceToCenter(new Vector2(0, 100000), true);
+            System.out.println(" player 2 - cima");
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
             player2.b2Body.applyForceToCenter(new Vector2(0, -100000), true);
+            System.out.println(" player 2 - baixo");
         }
     }
 
