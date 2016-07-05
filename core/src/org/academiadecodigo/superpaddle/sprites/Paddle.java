@@ -33,15 +33,15 @@ public class Paddle extends Sprite {
 
         BodyDef bdef = new BodyDef();
         bdef.position.set(x, y);
-        bdef.type = BodyDef.BodyType.KinematicBody;
+        bdef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         Vector2[] vertice = new Vector2[4];
-        vertice[0] = new Vector2(-7.5f,57);
-        vertice[1] = new Vector2(-7.5f,-57);
-        vertice[2] = new Vector2(7.5f,-57);
+        vertice[0] = new Vector2(-7.5f, 57);
+        vertice[1] = new Vector2(-7.5f, -57);
+        vertice[2] = new Vector2(7.5f, -57);
         vertice[3] = new Vector2(7.5f, 57);
         shape.set(vertice);
 
@@ -50,7 +50,8 @@ public class Paddle extends Sprite {
 
         fdef.shape = shape;
         fdef.restitution = 1f;
-
+        fdef.density = 1f;
+        fdef.friction = 1f;
         b2Body.createFixture(fdef);
     }
 }

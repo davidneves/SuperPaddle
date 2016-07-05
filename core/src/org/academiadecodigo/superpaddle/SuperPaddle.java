@@ -8,45 +8,45 @@ import org.academiadecodigo.superpaddle.screens.MenuScreen;
 
 public class SuperPaddle extends Game {
 
-	public static final int WIDTH = 800;
-	public static final int HEIGHT = 480;
-	public static final float PPM = 100;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 480;
+    public static final float PPM = 100;
 
-	public static final short EDGE_BIT = 1;
-	public static final short BALL_BIT = 2;
-	public static final short PADDLE_BIT = 4;
-	public static final short BLOCK_BIT = 8;
+    public static final short EDGE_BIT = 1;
+    public static final short BALL_BIT = 2;
+    public static final short PADDLE_BIT = 4;
+    public static final short BLOCK_BIT = 8;
 
-	public SpriteBatch sb;
+    public SpriteBatch sb;
 
-	private AssetManager manager;
+    private AssetManager manager;
 
 
-	@Override
-	public void create () {
+    @Override
+    public void create() {
 
-		sb = new SpriteBatch();
+        sb = new SpriteBatch();
 
-		manager = new AssetManager();
-		manager.load("audio/music.mp3", Music.class);
-		manager.finishLoading();
+        manager = new AssetManager();
+        manager.load("audio/music.mp3", Music.class);
+        manager.finishLoading();
 
-		setScreen(new MenuScreen(this, manager));
-	}
+        setScreen(new MenuScreen(this, manager));
+    }
 
-	@Override
-	public void render () {
+    @Override
+    public void render() {
 
-		super.render();
+        super.render();
 
-	}
+    }
 
-	@Override
-	public void dispose() {
-		super.dispose();
-		manager.dispose();
-		sb.dispose();
-	}
+    @Override
+    public void dispose() {
+        super.dispose();
+        manager.dispose();
+        sb.dispose();
+    }
 }
 
 //TODO: 1 - move paddles according to keyboard input

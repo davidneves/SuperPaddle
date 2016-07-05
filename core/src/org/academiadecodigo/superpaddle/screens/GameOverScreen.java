@@ -14,6 +14,7 @@ import org.academiadecodigo.superpaddle.SuperPaddle;
  * Created by Cadavre Exquis on 05-07-2016.
  */
 public class GameOverScreen implements Screen{
+
     private SuperPaddle game;
     private OrthographicCamera cam;
     private Viewport viewport;
@@ -27,6 +28,10 @@ public class GameOverScreen implements Screen{
         this.game = game;
         this.manager = manager;
 
+        init();
+    }
+
+    private void init(){
         cam = new OrthographicCamera();
         viewport = new FitViewport(SuperPaddle.WIDTH, SuperPaddle.HEIGHT, cam);
 

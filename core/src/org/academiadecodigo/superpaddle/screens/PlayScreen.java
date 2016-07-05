@@ -1,6 +1,7 @@
 package org.academiadecodigo.superpaddle.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
@@ -58,6 +59,12 @@ public class PlayScreen implements Screen {
         this.game = game;
         this.manager = manager;
 
+        init();
+    }
+
+    private void init() {
+
+        //TODO: add comments explaining what is going on
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(SuperPaddle.WIDTH, SuperPaddle.HEIGHT, gameCam);
         hud = new Hud(game.sb);
@@ -74,7 +81,6 @@ public class PlayScreen implements Screen {
 
         ball = new Ball(this);
         player1 = new Paddle(this, 40, 100);
-
         player2 = new Paddle(this, SuperPaddle.WIDTH - 40, SuperPaddle.HEIGHT - 100);
 
 
@@ -90,12 +96,28 @@ public class PlayScreen implements Screen {
 
             ball.b2Body.applyForce(new Vector2(MathUtils.random(-1000000, 1000000), MathUtils.random(-100000, 100000)), ball.b2Body.getWorldCenter(), true);
         }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+            //player1.b2Body.applyLinearImpulse(new Vector2(0, 100000), player1.b2Body.getWorldCenter(), true);
+            player1.b2Body.applyForceToCenter(new Vector2(0, 1000000), true);
+            System.out.println("cima");
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
+            player1.b2Body.applyLinearImpulse(new Vector2(0, -10000), player1.b2Body.getWorldCenter(), true);
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W)){
+            player2.b2Body.applyForceToCenter(new Vector2(0, 100000), true);
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.S)){
+            player2.b2Body.applyForceToCenter(new Vector2(0, -100000), true);
+        }
     }
 
     public void update(float dt) {
 
         handleInput(dt);
-        world.step(1/60f, 6, 2);
+        world.step(1 / 60f, 6, 2);
 
         ball.update(dt);
         player1.update(dt);
