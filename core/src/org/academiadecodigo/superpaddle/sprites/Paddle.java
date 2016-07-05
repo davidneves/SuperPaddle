@@ -33,7 +33,7 @@ public class Paddle extends Sprite {
 
         BodyDef bdef = new BodyDef();
         bdef.position.set(x, y);
-        bdef.type = BodyDef.BodyType.DynamicBody;
+        bdef.type = BodyDef.BodyType.KinematicBody;
         b2Body = world.createBody(bdef);
 
         b2Body.setGravityScale(10f);

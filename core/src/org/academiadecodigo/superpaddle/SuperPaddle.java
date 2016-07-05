@@ -49,7 +49,7 @@ public class SuperPaddle extends Game {
     }
 }
 
-//TODO: 1 - move paddles ONLY according to keyboard input, on a fixed x position.
+
 //TODO: 2 - add blocks with tiled
 //TODO: 3 - update score according to game
 //TODO: 4 - add game over screen
