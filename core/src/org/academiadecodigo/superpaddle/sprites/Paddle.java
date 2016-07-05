@@ -53,7 +53,7 @@ public class Paddle extends Sprite {
         fdef.shape = shape;
         fdef.restitution = 1f;
         //fdef.density = 10f;
-        //fdef.friction = 10f;
+        fdef.friction = 0f;
         b2Body.createFixture(fdef);
     }
 }

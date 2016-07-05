@@ -27,16 +27,16 @@ public class B2WorldCreator {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / SuperPaddle.PPM, (rect.getY() + rect.getHeight() / 2) / SuperPaddle.PPM);
 
             body = world.createBody(bdef);
 
-            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
+            shape.setAsBox(rect.getWidth() / 2 / SuperPaddle.PPM, rect.getHeight() / 2 / SuperPaddle.PPM);
             fdef.shape = shape;
             fdef.filter.categoryBits = SuperPaddle.EDGE_BIT;
             body.createFixture(fdef);
         }
-        for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+        /*for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
@@ -48,6 +48,6 @@ public class B2WorldCreator {
             fdef.shape = shape;
             fdef.filter.categoryBits = SuperPaddle.EDGE_BIT;
             body.createFixture(fdef);
-        }
+        }*/
     }
 }

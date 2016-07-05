@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -36,7 +37,7 @@ public class PlayScreen implements Screen {
     private OrthographicCamera gameCam;
     private Viewport gamePort;
 
-    private Texture background;
+    //private Texture background;
 
     private Hud hud;
 
@@ -66,12 +67,12 @@ public class PlayScreen implements Screen {
 
         //TODO: add comments explaining what is going on
         gameCam = new OrthographicCamera();
-        gamePort = new FitViewport(SuperPaddle.WIDTH, SuperPaddle.HEIGHT, gameCam);
+        gamePort = new FitViewport(SuperPaddle.WIDTH / SuperPaddle.PPM, SuperPaddle.HEIGHT / SuperPaddle.PPM, gameCam);
         hud = new Hud(game.sb);
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("limits.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1);
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / SuperPaddle.PPM);
         gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
         world = new World(new Vector2(0, 0), true);
@@ -86,7 +87,7 @@ public class PlayScreen implements Screen {
 
         world.setContactListener(new BallContactListener());
 
-        background = new Texture("game_background.jpg");
+        //background = new Texture("game_background.jpg");
 
     }
 
@@ -94,7 +95,12 @@ public class PlayScreen implements Screen {
 
         if (Gdx.input.justTouched()) {
             //player1.b2Body.setLinearVelocity(0, 0);
-            ball.b2Body.applyForce(new Vector2(MathUtils.random(-1000000, 1000000), MathUtils.random(-100000, 100000)), ball.b2Body.getWorldCenter(), true);
+            //ball.b2Body.applyForce(new Vector2(MathUtils.random(-1000000, 1000000), MathUtils.random(-100000, 100000)), ball.b2Body.getWorldCenter(), true);
+            ball.b2Body.setLinearVelocity(SuperPaddle.BALL_SPEED, SuperPaddle.BALL_SPEED);
+            System.out.println(ball.b2Body.getLinearVelocity().x);
+            MassData mass = new MassData();
+            ball.b2Body.setMassData(mass);
+            System.out.println(ball.b2Body.getMass());
         }
 
 
@@ -105,31 +111,28 @@ public class PlayScreen implements Screen {
     }
 
     private void handlePlayer1Input() {
-        System.out.println("");
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             player1.b2Body.setLinearVelocity(0, 1000);
-            System.out.println("up");
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            System.out.println("down");
             player1.b2Body.setLinearVelocity(0, -1000);
         } else {
-
-            Vector2 vector = player1.b2Body.getLinearVelocity();
-            if(vector.x != 0 || vector.y != 0){
+            Vector2 p1Vel = player1.b2Body.getLinearVelocity();
+            if (p1Vel.x != 0 || p1Vel.y != 0) {
                 setToSteady(player1);
-                System.out.println("overriding velocity");
             }
         }
-
     }
 
     private void handlePlayer2Input() {
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             player2.b2Body.setLinearVelocity(0, 1000);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && player2.b2Body.getPosition().y - player2.getHeight() / 2 > 0) {
             player2.b2Body.setLinearVelocity(0, -1000);
         } else {
-            setToSteady(player2);
+            Vector2 p2Vel = player2.b2Body.getLinearVelocity();
+            if (p2Vel.x != 0 || p2Vel.y != 0) {
+                setToSteady(player2);
+            }
         }
     }
 
@@ -143,6 +146,15 @@ public class PlayScreen implements Screen {
         world.step(1 / 60f, 6, 2);
 
         ball.update(dt);
+
+        if (ball.isGoalPlayer1()) {
+            hud.addScore(SuperPaddle.GOAL_SCORE, 1);
+            ball.resetBall();
+        }
+        if (ball.isGoalPlayer2()){
+            hud.addScore(SuperPaddle.GOAL_SCORE, 2);
+            ball.resetBall();
+        }
         player1.update(dt);
         player2.update(dt);
 
@@ -171,7 +183,7 @@ public class PlayScreen implements Screen {
 
         game.sb.setProjectionMatrix(gameCam.combined);
         game.sb.begin();
-        game.sb.draw(background, 0, gameCam.position.y - gameCam.viewportHeight / 2);
+        //game.sb.draw(background, 0, gameCam.position.y - gameCam.viewportHeight / 2);
         ball.draw(game.sb);
         player1.draw(game.sb);
         player2.draw(game.sb);

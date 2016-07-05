@@ -28,7 +28,15 @@ public class Ball extends Sprite {
         setPosition(b2Body.getPosition().x - getWidth() / 2, b2Body.getPosition().y - getHeight() / 2);
     }
 
-    public void defineBall() {
+    public boolean isGoalPlayer2() {
+        return (b2Body.getPosition().x < 0);
+    }
+
+    public boolean isGoalPlayer1() {
+        return (b2Body.getPosition().x > SuperPaddle.WIDTH);
+    }
+
+    private void defineBall() {
 
         BodyDef bdef = new BodyDef();
         bdef.position.set(SuperPaddle.WIDTH / 2, SuperPaddle.HEIGHT / 2);
@@ -43,8 +51,12 @@ public class Ball extends Sprite {
 
         fdef.shape = shape;
         fdef.restitution = 1f;
-        //fdef.friction = 1000f;
+        fdef.friction = 0f;
         //fdef.density = 1000f;
         b2Body.createFixture(fdef);
+    }
+
+    public void resetBall(){
+        defineBall();
     }
 }

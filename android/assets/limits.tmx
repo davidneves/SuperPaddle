@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="16" tileheight="16" nextobjectid="9">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="16" tileheight="16" nextobjectid="14">
  <tileset firstgid="1" name="tile" tilewidth="16" tileheight="16" tilecount="1" columns="1">
   <image source="tile.png" width="16" height="16"/>
  </tileset>
  <layer name="Tile Layer 1" width="50" height="30">
   <data encoding="base64" compression="zlib">
-   eJztz0ENACAMwEDwb5ovEm5LL6mAnrPHHd7/MVUflj4sfVj6sPRh6cPSh6UPSx+WPix9WPqwbP2Y3CYP31IAlQ==
+   eJzt2LEJAAAIwDD9/2lHZydREugTjfgjjwcAAAAAMLX9NX3RVn1sAGE=
   </data>
  </layer>
  <objectgroup name="Limit">
   <object id="2" x="16" y="16" width="768" height="16"/>
   <object id="6" x="16" y="448" width="768" height="16"/>
  </objectgroup>
- <objectgroup name="Goals">
-  <object id="7" x="16" y="32" width="16" height="416"/>
-  <object id="8" x="768" y="32" width="16" height="416"/>
- </objectgroup>
+ <imagelayer name="pic">
+  <image source="game_background.jpg" width="800" height="480"/>
+ </imagelayer>
 </map>

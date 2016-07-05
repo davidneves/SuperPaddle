@@ -29,13 +29,15 @@ public class Hud implements Disposable {
     private Viewport viewport;
     private Integer worldTimer;
     private float timeCount;
-    private static Integer score;
+    private static Integer scorePlayer1;
+    private static Integer scorePlayer2;
 
     public Hud(SpriteBatch sb) {
 
         worldTimer = 300;
         timeCount = 0;
-        score = 0;
+        scorePlayer1 = 0;
+        scorePlayer2 = 0;
 
         viewport = new FitViewport(SuperPaddle.WIDTH, SuperPaddle.HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
@@ -45,8 +47,8 @@ public class Hud implements Disposable {
         table.setFillParent(true);
 
         countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabel1 = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabel2 = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabel1 = new Label(String.format("%06d", scorePlayer1), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabel2 = new Label(String.format("%06d", scorePlayer2), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         player1Label = new Label("PLAYER 1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         player2Label = new Label("PLAYER 2", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
@@ -72,9 +74,19 @@ public class Hud implements Disposable {
         }
     }
 
-    public static void addScore(int value) {
-        score += value;
-        scoreLabel1.setText(String.format("%06d", score));
+    public static void addScore(int value, int player) {
+        switch (player) {
+            case 1:
+                scorePlayer1 += value;
+                scoreLabel1.setText(String.format("%06d", scorePlayer1));
+                break;
+            case 2:
+                scorePlayer2 += value;
+                scoreLabel2.setText(String.format("%06d", scorePlayer2));
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
