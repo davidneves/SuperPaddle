@@ -36,6 +36,8 @@ public class Paddle extends Sprite {
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bdef);
 
+        b2Body.setGravityScale(10f);
+
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         Vector2[] vertice = new Vector2[4];
@@ -50,8 +52,8 @@ public class Paddle extends Sprite {
 
         fdef.shape = shape;
         fdef.restitution = 1f;
-        //fdef.density = 0.5f;
-        //fdef.friction = 0.5f;
+        //fdef.density = 10f;
+        //fdef.friction = 10f;
         b2Body.createFixture(fdef);
     }
 }

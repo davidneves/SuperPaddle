@@ -43,7 +43,8 @@ public class Ball extends Sprite {
 
         fdef.shape = shape;
         fdef.restitution = 1f;
-        fdef.friction = 0f;
+        //fdef.friction = 1000f;
+        //fdef.density = 1000f;
         b2Body.createFixture(fdef);
     }
 }

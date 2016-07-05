@@ -98,8 +98,8 @@ public class PlayScreen implements Screen {
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.W)){
-            //player1.b2Body.applyLinearImpulse(new Vector2(0, 100000), player1.b2Body.getWorldCenter(), true);
-            player1.b2Body.applyForceToCenter(new Vector2(0, 1000000), true);
+            player1.b2Body.applyLinearImpulse(new Vector2(0, 100000), player1.b2Body.getWorldCenter(), true);
+            //player1.b2Body.applyForceToCenter(new Vector2(0, 1000000), true);
             System.out.println(" player 1 - cima");
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.S)){
@@ -112,6 +112,7 @@ public class PlayScreen implements Screen {
             System.out.println(" player 2 - cima");
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
+            Gdx.input.
             player2.b2Body.applyForceToCenter(new Vector2(0, -100000), true);
             System.out.println(" player 2 - baixo");
         }
