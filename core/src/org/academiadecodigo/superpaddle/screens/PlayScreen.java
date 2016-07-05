@@ -111,9 +111,9 @@ public class PlayScreen implements Screen {
     }
 
     private void handlePlayer1Input() {
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.W) && player1.b2Body.getPosition().y + player1.getHeight() / 2 < SuperPaddle.HEIGHT) {
             player1.b2Body.setLinearVelocity(0, 1000);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.S) && player1.b2Body.getPosition().y - player1.getHeight() / 2 > 0) {
             player1.b2Body.setLinearVelocity(0, -1000);
         } else {
             Vector2 p1Vel = player1.b2Body.getLinearVelocity();
@@ -124,7 +124,7 @@ public class PlayScreen implements Screen {
     }
 
     private void handlePlayer2Input() {
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.UP) && player2.b2Body.getPosition().y + player2.getHeight() / 2 < SuperPaddle.HEIGHT) {
             player2.b2Body.setLinearVelocity(0, 1000);
         } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && player2.b2Body.getPosition().y - player2.getHeight() / 2 > 0) {
             player2.b2Body.setLinearVelocity(0, -1000);
