@@ -57,7 +57,7 @@ public class SuperPaddle extends Game {
         sb.dispose();
     }
 }
-
+//TODO: add warning before game over screen saying which player won
 //TODO: move paddles with touch thingy
 //TODO: add networking! --> implement server-client model
 //TODO: implement high score using databases
