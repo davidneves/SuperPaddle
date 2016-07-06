@@ -16,6 +16,7 @@ public class SuperPaddle extends Game {
     public static final short BALL_BIT = 2;
     public static final short PADDLE_BIT = 4;
     public static final short BLOCK_BIT = 8;
+    public static final short DESTROYED_BLOCK_BIT = 16;
 
     public static final int GOAL_SCORE = 100;
     public static final float BALL_SPEED = 5f;

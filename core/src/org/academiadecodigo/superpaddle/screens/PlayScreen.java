@@ -13,15 +13,12 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.superpaddle.SuperPaddle;
 import org.academiadecodigo.superpaddle.scenes.Hud;
 import org.academiadecodigo.superpaddle.sprites.Ball;
-import org.academiadecodigo.superpaddle.sprites.Block;
 import org.academiadecodigo.superpaddle.sprites.Paddle;
 import org.academiadecodigo.superpaddle.tools.B2WorldCreator;
 import org.academiadecodigo.superpaddle.tools.BallContactListener;
@@ -55,7 +52,7 @@ public class PlayScreen implements Screen {
     private Ball ball;
     private Paddle player1;
     private Paddle player2;
-    private Array<Block> blocks;
+    //private Array<Block> blocks;
     private boolean p1Scored;
     private boolean p2Scored;
     private float playerScoredAnimationTimer;
@@ -97,7 +94,11 @@ public class PlayScreen implements Screen {
         p2ScoreTexture = new Texture("p2Score.png");
         playerScoredAnimationTimer = SCORE_ANIMATION_TIME;
 
+
+
     }
+
+
 
     public void handleInput(float dt) {
 
@@ -150,9 +151,12 @@ public class PlayScreen implements Screen {
             gameOver();
         }
         handleInput(dt);
+
         world.step(1 / 60f, 6, 2);
 
         ball.update(dt);
+
+
 
 
         if (ball.isGoalPlayer1()) {
@@ -203,6 +207,9 @@ public class PlayScreen implements Screen {
         ball.draw(game.sb);
         player1.draw(game.sb);
         player2.draw(game.sb);
+
+
+
         if (p1Scored) {
             if (playerScoredAnimationTimer > 0) {
                 game.sb.draw(p1ScoreTexture, ((SuperPaddle.WIDTH / 2) - (p1ScoreTexture.getWidth() / 2)) / SuperPaddle.PPM, ((SuperPaddle.HEIGHT / 2) - (p1ScoreTexture.getHeight() / 2)) / SuperPaddle.PPM, p1ScoreTexture.getWidth() / SuperPaddle.PPM, p1ScoreTexture.getHeight() / SuperPaddle.PPM);
