@@ -52,10 +52,10 @@ public class SuperPaddle extends Game {
     }
 }
 
-
+//TODO: 1 - center score notification
 //TODO: 2 - add blocks with tiled
 //TODO: 3 - update score according to game - missing blocks destruction score
-//TODO: 4 - add game over screen
+//TODO: 4 - finnish game when time reaches 0 and show game over screen
 //wishlist: move paddles with touch thingy
 //wishlist: add networking! --> implement server-client model
 //wishlist: implement high score using databases
