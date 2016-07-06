@@ -79,7 +79,7 @@ public class Block {
 
 
     public TiledMapTileLayer.Cell getCell() {
-        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(4);
+        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(6);
 
         return layer.getCell((int)(body.getPosition().x * SuperPaddle.PPM / 16), (int)(body.getPosition().y * SuperPaddle.PPM / 16));
     }

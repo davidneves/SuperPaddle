@@ -28,7 +28,7 @@ import org.academiadecodigo.superpaddle.tools.BallContactListener;
  */
 public class PlayScreen implements Screen {
 
-    private final float SCORE_ANIMATION_TIME = 2;
+    private final float SCORE_ANIMATION_TIME = 1;
 
     private SuperPaddle game;
     private AssetManager manager;
@@ -84,8 +84,8 @@ public class PlayScreen implements Screen {
         creator = new B2WorldCreator(this);
 
         ball = new Ball(this);
-        player1 = new Paddle(this, 40, 100);
-        player2 = new Paddle(this, SuperPaddle.WIDTH - 40, SuperPaddle.HEIGHT - 100);
+        player1 = new Paddle(this, 40, 100, 1);
+        player2 = new Paddle(this, SuperPaddle.WIDTH - 40, SuperPaddle.HEIGHT - 100, 2);
 
 
         world.setContactListener(new BallContactListener());
@@ -102,7 +102,7 @@ public class PlayScreen implements Screen {
 
     public void handleInput(float dt) {
 
-        if (Gdx.input.justTouched()) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !ball.b2Body.isAwake()) {
             //player1.b2Body.setLinearVelocity(0, 0);
             //ball.b2Body.applyForce(new Vector2(MathUtils.random(-SuperPaddle.BALL_SPEED, SuperPaddle.BALL_SPEED), MathUtils.random(-SuperPaddle.BALL_SPEED, SuperPaddle.BALL_SPEED)), ball.b2Body.getWorldCenter(), true);
             ball.b2Body.setLinearVelocity(SuperPaddle.BALL_SPEED * MathUtils.randomSign(), SuperPaddle.BALL_SPEED * MathUtils.randomSign());
@@ -159,14 +159,12 @@ public class PlayScreen implements Screen {
 
 
 
-        if (ball.isGoalPlayer1()) {
-            hud.addScore(SuperPaddle.GOAL_SCORE, 1);
-            ball.resetBall();
+        if (ball.isGoalPlayer1() && !p1Scored) {
+            hud.addScore(SuperPaddle.GOAL_SCORE, player1.playerNumber);
             p1Scored = true;
         }
-        if (ball.isGoalPlayer2()) {
-            hud.addScore(SuperPaddle.GOAL_SCORE, 2);
-            ball.resetBall();
+        if (ball.isGoalPlayer2() && !p2Scored) {
+            hud.addScore(SuperPaddle.GOAL_SCORE, player2.playerNumber);
             p2Scored = true;
         }
         player1.update(dt);
@@ -217,6 +215,8 @@ public class PlayScreen implements Screen {
             } else {
                 playerScoredAnimationTimer = SCORE_ANIMATION_TIME;
                 p1Scored = false;
+
+                ball.resetBall();
             }
         }
         if (p2Scored) {
@@ -226,6 +226,7 @@ public class PlayScreen implements Screen {
             } else {
                 playerScoredAnimationTimer = SCORE_ANIMATION_TIME;
                 p2Scored = false;
+                ball.resetBall();
             }
         }
 

@@ -14,12 +14,15 @@ public class Paddle extends Sprite {
 
     public World world;
     public Body b2Body;
+    public int playerNumber;
+    public Fixture fixture;
 
-    public Paddle(PlayScreen screen, float x, float y) {
+    public Paddle(PlayScreen screen, float x, float y, int playerNumber) {
 
         super(new Texture("paddle.png"));
         this.world = screen.getWorld();
         setSize(this.getWidth() / SuperPaddle.PPM, this.getHeight() / SuperPaddle.PPM);
+        this.playerNumber = playerNumber;
 
         definePaddle(x, y);
 
@@ -55,6 +58,7 @@ public class Paddle extends Sprite {
         fdef.restitution = 1f;
         //fdef.density = 10f;
         fdef.friction = 0f;
-        b2Body.createFixture(fdef);
+        fixture = b2Body.createFixture(fdef);
+        fixture.setUserData(this);
     }
 }

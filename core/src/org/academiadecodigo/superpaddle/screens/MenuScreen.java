@@ -1,6 +1,7 @@
 package org.academiadecodigo.superpaddle.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
@@ -51,7 +52,7 @@ public class MenuScreen implements Screen {
 
     public void handleInput(float dt) {
 
-        if (Gdx.input.justTouched()) {
+        if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 
             game.setScreen(new PlayScreen(game, manager));
             dispose();

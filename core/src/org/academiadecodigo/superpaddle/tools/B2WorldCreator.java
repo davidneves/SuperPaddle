@@ -45,30 +45,12 @@ public class B2WorldCreator {
 
         //blocks = new Array<Block>();
 
-        for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : map.getLayers().get(5 ).getObjects().getByType(RectangleMapObject.class)) {
 
             new Block(screen, object);
 
-            //blocks.add(new Block(screen, rect.getX()/SuperPaddle.PPM, rect.getY()/SuperPaddle.PPM));
-/*
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2)/ SuperPaddle.PPM, (rect.getY() + rect.getHeight() / 2)/ SuperPaddle.PPM);
-
-            body = world.createBody(bdef);
-
-            shape.setAsBox(rect.getWidth() / 2/ SuperPaddle.PPM, rect.getHeight() / 2/ SuperPaddle.PPM);
-            fdef.shape = shape;
-            fdef.filter.categoryBits = SuperPaddle.BLOCK_BIT;
-            body.createFixture(fdef);*/
         }
     }
 
-    public static void removeBlock(Block block){
-        //blocks.removeValue(block, true);
-    }
 
-    public Array<Block> getBlocks(){
-        //return blocks;
-        return null;
-    }
 }
