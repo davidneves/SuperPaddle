@@ -81,7 +81,7 @@ public class PlayScreen implements Screen {
         gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
         world = new World(new Vector2(0, 0), true);
-        b2dr = new Box2DDebugRenderer();
+        //b2dr = new Box2DDebugRenderer();
 
         creator = new B2WorldCreator(this);
 
@@ -184,7 +184,7 @@ public class PlayScreen implements Screen {
 
         renderer.render();
 
-        b2dr.render(world, gameCam.combined);
+        //b2dr.render(world, gameCam.combined);
 
         game.sb.setProjectionMatrix(gameCam.combined);
         game.sb.begin();
@@ -193,7 +193,7 @@ public class PlayScreen implements Screen {
         player2.draw(game.sb);
         if (p1Scored) {
             if (playerScoredAnimationTimer > 0) {
-                game.sb.draw(p1ScoreTexture, (SuperPaddle.WIDTH / 2) - (p1ScoreTexture.getWidth() / 2), 0);
+                game.sb.draw(p1ScoreTexture, (SuperPaddle.WIDTH / 2) - (p1ScoreTexture.getWidth() / 2), (SuperPaddle.HEIGHT / 2) - (p1ScoreTexture.getHeight() / 2));
                 playerScoredAnimationTimer -= dt;
             } else {
                 playerScoredAnimationTimer = SCORE_ANIMATION_TIME;
@@ -202,7 +202,7 @@ public class PlayScreen implements Screen {
         }
         if (p2Scored) {
             if (playerScoredAnimationTimer > 0) {
-                game.sb.draw(p2ScoreTexture, (SuperPaddle.WIDTH / 2) - (p2ScoreTexture.getWidth() / 2), 0);
+                game.sb.draw(p2ScoreTexture, (SuperPaddle.WIDTH / 2) - (p2ScoreTexture.getWidth() / 2), (SuperPaddle.HEIGHT / 2) - (p2ScoreTexture.getHeight() / 2));
                 playerScoredAnimationTimer -= dt;
             } else {
                 playerScoredAnimationTimer = SCORE_ANIMATION_TIME;
@@ -244,7 +244,7 @@ public class PlayScreen implements Screen {
         map.dispose();
         renderer.dispose();
         world.dispose();
-        b2dr.dispose();
+        //b2dr.dispose();
         hud.dispose();
         p1ScoreTexture.dispose();
         p2ScoreTexture.dispose();

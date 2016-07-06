@@ -8,7 +8,7 @@
    eJzt2LEJAAAIwDD9/2lHZydREugTjfgjjwcAAAAAMLX9NX3RVn1sAGE=
   </data>
  </layer>
- <objectgroup name="Limit">
+ <objectgroup name="Limit" opacity="0">
   <object id="2" x="16" y="16" width="768" height="16"/>
   <object id="6" x="16" y="448" width="768" height="16"/>
  </objectgroup>
