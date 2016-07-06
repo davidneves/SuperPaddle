@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.MassData;
@@ -31,13 +30,16 @@ import org.academiadecodigo.superpaddle.tools.BallContactListener;
  */
 public class PlayScreen implements Screen {
 
+    private final float SCORE_ANIMATION_TIME = 2;
+
     private SuperPaddle game;
     private AssetManager manager;
 
     private OrthographicCamera gameCam;
     private Viewport gamePort;
 
-    //private Texture background;
+    private Texture p1ScoreTexture;
+    private Texture p2ScoreTexture;
 
     private Hud hud;
 
@@ -53,6 +55,9 @@ public class PlayScreen implements Screen {
     private Paddle player1;
     private Paddle player2;
     private Array<Block> blocks;
+    private boolean p1Scored;
+    private boolean p2Scored;
+    private float playerScoredAnimationTimer;
 
 
     public PlayScreen(SuperPaddle game, AssetManager manager) {
@@ -87,7 +92,9 @@ public class PlayScreen implements Screen {
 
         world.setContactListener(new BallContactListener());
 
-        //background = new Texture("game_background.jpg");
+        p1ScoreTexture = new Texture("p1Score.png");
+        p2ScoreTexture = new Texture("p2Score.png");
+        playerScoredAnimationTimer = SCORE_ANIMATION_TIME;
 
     }
 
@@ -97,10 +104,6 @@ public class PlayScreen implements Screen {
             //player1.b2Body.setLinearVelocity(0, 0);
             //ball.b2Body.applyForce(new Vector2(MathUtils.random(-1000000, 1000000), MathUtils.random(-100000, 100000)), ball.b2Body.getWorldCenter(), true);
             ball.b2Body.setLinearVelocity(SuperPaddle.BALL_SPEED, SuperPaddle.BALL_SPEED);
-            System.out.println(ball.b2Body.getLinearVelocity().x);
-            MassData mass = new MassData();
-            ball.b2Body.setMassData(mass);
-            System.out.println(ball.b2Body.getMass());
         }
 
 
@@ -150,10 +153,12 @@ public class PlayScreen implements Screen {
         if (ball.isGoalPlayer1()) {
             hud.addScore(SuperPaddle.GOAL_SCORE, 1);
             ball.resetBall();
+            p1Scored = true;
         }
-        if (ball.isGoalPlayer2()){
+        if (ball.isGoalPlayer2()) {
             hud.addScore(SuperPaddle.GOAL_SCORE, 2);
             ball.resetBall();
+            p2Scored = true;
         }
         player1.update(dt);
         player2.update(dt);
@@ -183,10 +188,27 @@ public class PlayScreen implements Screen {
 
         game.sb.setProjectionMatrix(gameCam.combined);
         game.sb.begin();
-        //game.sb.draw(background, 0, gameCam.position.y - gameCam.viewportHeight / 2);
         ball.draw(game.sb);
         player1.draw(game.sb);
         player2.draw(game.sb);
+        if (p1Scored) {
+            if (playerScoredAnimationTimer > 0) {
+                game.sb.draw(p1ScoreTexture, (SuperPaddle.WIDTH / 2) - (p1ScoreTexture.getWidth() / 2), 0);
+                playerScoredAnimationTimer -= dt;
+            } else {
+                playerScoredAnimationTimer = SCORE_ANIMATION_TIME;
+                p1Scored = false;
+            }
+        }
+        if (p2Scored) {
+            if (playerScoredAnimationTimer > 0) {
+                game.sb.draw(p2ScoreTexture, (SuperPaddle.WIDTH / 2) - (p2ScoreTexture.getWidth() / 2), 0);
+                playerScoredAnimationTimer -= dt;
+            } else {
+                playerScoredAnimationTimer = SCORE_ANIMATION_TIME;
+                p2Scored = false;
+            }
+        }
 
         game.sb.end();
 
@@ -224,6 +246,8 @@ public class PlayScreen implements Screen {
         world.dispose();
         b2dr.dispose();
         hud.dispose();
+        p1ScoreTexture.dispose();
+        p2ScoreTexture.dispose();
     }
 
     public World getWorld() {
