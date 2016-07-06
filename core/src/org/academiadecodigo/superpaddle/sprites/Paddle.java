@@ -15,10 +15,11 @@ public class Paddle extends Sprite {
     public World world;
     public Body b2Body;
 
-    public Paddle(PlayScreen screen, int x, int y) {
+    public Paddle(PlayScreen screen, float x, float y) {
 
         super(new Texture("paddle.png"));
         this.world = screen.getWorld();
+        setSize(this.getWidth() / SuperPaddle.PPM, this.getHeight() / SuperPaddle.PPM);
 
         definePaddle(x, y);
 
@@ -29,22 +30,22 @@ public class Paddle extends Sprite {
         setPosition(b2Body.getPosition().x - getWidth() / 2, b2Body.getPosition().y - getHeight() / 2);
     }
 
-    public void definePaddle(int x, int y) {
+    public void definePaddle(float x, float y) {
 
         BodyDef bdef = new BodyDef();
-        bdef.position.set(x, y);
+        bdef.position.set(x / SuperPaddle.PPM, y / SuperPaddle.PPM);
         bdef.type = BodyDef.BodyType.KinematicBody;
         b2Body = world.createBody(bdef);
 
-        b2Body.setGravityScale(10f);
+        //b2Body.setGravityScale(10f);
 
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         Vector2[] vertice = new Vector2[4];
-        vertice[0] = new Vector2(-7.5f, 57);
-        vertice[1] = new Vector2(-7.5f, -57);
-        vertice[2] = new Vector2(7.5f, -57);
-        vertice[3] = new Vector2(7.5f, 57);
+        vertice[0] = new Vector2(-7.5f, 57).scl(1 / SuperPaddle.PPM);
+        vertice[1] = new Vector2(-7.5f, -57).scl(1 / SuperPaddle.PPM);
+        vertice[2] = new Vector2(7.5f, -57).scl(1 / SuperPaddle.PPM);
+        vertice[3] = new Vector2(7.5f, 57).scl(1 / SuperPaddle.PPM);
         shape.set(vertice);
 
         fdef.filter.categoryBits = SuperPaddle.PADDLE_BIT;

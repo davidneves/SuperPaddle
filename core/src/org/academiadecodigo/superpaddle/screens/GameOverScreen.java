@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.superpaddle.SuperPaddle;
@@ -13,12 +14,11 @@ import org.academiadecodigo.superpaddle.SuperPaddle;
 /**
  * Created by Cadavre Exquis on 05-07-2016.
  */
-public class GameOverScreen implements Screen{
+public class GameOverScreen implements Screen {
 
     private SuperPaddle game;
     private OrthographicCamera cam;
     private Viewport viewport;
-
     private AssetManager manager;
 
     private Texture texture;
@@ -31,13 +31,13 @@ public class GameOverScreen implements Screen{
         init();
     }
 
-    private void init(){
+    private void init() {
         cam = new OrthographicCamera();
         viewport = new FitViewport(SuperPaddle.WIDTH, SuperPaddle.HEIGHT, cam);
 
         cam.position.set(viewport.getWorldWidth() / 2, viewport.getScreenHeight() / 2, 0);
 
-        texture = new Texture("texture.jpg");
+        texture = new Texture("game_over.jpg");
     }
 
 
@@ -51,6 +51,7 @@ public class GameOverScreen implements Screen{
         if (Gdx.input.justTouched()) {
 
             game.setScreen(new MenuScreen(game, manager));
+            dispose();
         }
     }
 
@@ -71,6 +72,7 @@ public class GameOverScreen implements Screen{
         game.sb.draw(texture, 0, cam.position.y - cam.viewportHeight / 2);
 
         game.sb.end();
+
     }
 
 

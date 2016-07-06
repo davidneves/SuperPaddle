@@ -54,6 +54,7 @@ public class MenuScreen implements Screen {
         if (Gdx.input.justTouched()) {
 
             game.setScreen(new PlayScreen(game, manager));
+            dispose();
         }
     }
 
@@ -101,6 +102,6 @@ public class MenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        //texture.dispose();
     }
 }

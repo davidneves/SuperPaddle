@@ -17,24 +17,23 @@ import org.academiadecodigo.superpaddle.SuperPaddle;
  */
 public class Hud implements Disposable {
 
-    public Stage stage;
-    private Label countdownLabel;
     private static Label scoreLabel1;
     private static Label scoreLabel2;
+    private static Integer scorePlayer1;
+    private static Integer scorePlayer2;
+    public Stage stage;
+    private Label countdownLabel;
     private Label timeLabel;
-
-
     private Label player1Label;
     private Label player2Label;
     private Viewport viewport;
     private Integer worldTimer;
     private float timeCount;
-    private static Integer scorePlayer1;
-    private static Integer scorePlayer2;
+    private boolean timeUp;
 
     public Hud(SpriteBatch sb) {
 
-        worldTimer = 300;
+        worldTimer = SuperPaddle.GAME_TIME_LENGHT_DURATION;
         timeCount = 0;
         scorePlayer1 = 0;
         scorePlayer2 = 0;
@@ -64,16 +63,6 @@ public class Hud implements Disposable {
         stage.addActor(table);
     }
 
-    public void update(float dt) {
-
-        timeCount += dt;
-        if (timeCount >= 1) {
-            worldTimer--;
-            countdownLabel.setText(String.format("%03d", worldTimer));
-            timeCount = 0;
-        }
-    }
-
     public static void addScore(int value, int player) {
         switch (player) {
             case 1:
@@ -87,6 +76,26 @@ public class Hud implements Disposable {
             default:
                 break;
         }
+    }
+
+    public void update(float dt) {
+
+        timeCount += dt;
+        if (timeCount >= 1) {
+
+            if (worldTimer > 0) {
+                worldTimer--;
+
+            } else {
+                timeUp = true;
+            }
+            countdownLabel.setText(String.format("%03d", worldTimer));
+            timeCount = 0;
+        }
+    }
+
+    public boolean isTimeUp() {
+        return timeUp;
     }
 
     @Override

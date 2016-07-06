@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.MassData;
@@ -102,8 +103,8 @@ public class PlayScreen implements Screen {
 
         if (Gdx.input.justTouched()) {
             //player1.b2Body.setLinearVelocity(0, 0);
-            //ball.b2Body.applyForce(new Vector2(MathUtils.random(-1000000, 1000000), MathUtils.random(-100000, 100000)), ball.b2Body.getWorldCenter(), true);
-            ball.b2Body.setLinearVelocity(SuperPaddle.BALL_SPEED, SuperPaddle.BALL_SPEED);
+            //ball.b2Body.applyForce(new Vector2(MathUtils.random(-SuperPaddle.BALL_SPEED, SuperPaddle.BALL_SPEED), MathUtils.random(-SuperPaddle.BALL_SPEED, SuperPaddle.BALL_SPEED)), ball.b2Body.getWorldCenter(), true);
+            ball.b2Body.setLinearVelocity(SuperPaddle.BALL_SPEED * MathUtils.randomSign(), SuperPaddle.BALL_SPEED * MathUtils.randomSign());
         }
 
 
@@ -114,10 +115,10 @@ public class PlayScreen implements Screen {
     }
 
     private void handlePlayer1Input() {
-        if (Gdx.input.isKeyPressed(Input.Keys.W) && player1.b2Body.getPosition().y + player1.getHeight() / 2 < SuperPaddle.HEIGHT) {
-            player1.b2Body.setLinearVelocity(0, 1000);
+        if (Gdx.input.isKeyPressed(Input.Keys.W) && player1.b2Body.getPosition().y + player1.getHeight() / 2 < SuperPaddle.HEIGHT / SuperPaddle.PPM) {
+            player1.b2Body.setLinearVelocity(0, SuperPaddle.PADDLE_SPEED);
         } else if (Gdx.input.isKeyPressed(Input.Keys.S) && player1.b2Body.getPosition().y - player1.getHeight() / 2 > 0) {
-            player1.b2Body.setLinearVelocity(0, -1000);
+            player1.b2Body.setLinearVelocity(0, -SuperPaddle.PADDLE_SPEED);
         } else {
             Vector2 p1Vel = player1.b2Body.getLinearVelocity();
             if (p1Vel.x != 0 || p1Vel.y != 0) {
@@ -127,10 +128,10 @@ public class PlayScreen implements Screen {
     }
 
     private void handlePlayer2Input() {
-        if (Gdx.input.isKeyPressed(Input.Keys.UP) && player2.b2Body.getPosition().y + player2.getHeight() / 2 < SuperPaddle.HEIGHT) {
-            player2.b2Body.setLinearVelocity(0, 1000);
+        if (Gdx.input.isKeyPressed(Input.Keys.UP) && player2.b2Body.getPosition().y + player2.getHeight() / 2 < SuperPaddle.HEIGHT / SuperPaddle.PPM) {
+            player2.b2Body.setLinearVelocity(0, SuperPaddle.PADDLE_SPEED);
         } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && player2.b2Body.getPosition().y - player2.getHeight() / 2 > 0) {
-            player2.b2Body.setLinearVelocity(0, -1000);
+            player2.b2Body.setLinearVelocity(0, -SuperPaddle.PADDLE_SPEED);
         } else {
             Vector2 p2Vel = player2.b2Body.getLinearVelocity();
             if (p2Vel.x != 0 || p2Vel.y != 0) {
@@ -145,10 +146,14 @@ public class PlayScreen implements Screen {
 
     public void update(float dt) {
 
+        if (hud.isTimeUp()){
+            gameOver();
+        }
         handleInput(dt);
         world.step(1 / 60f, 6, 2);
 
         ball.update(dt);
+
 
         if (ball.isGoalPlayer1()) {
             hud.addScore(SuperPaddle.GOAL_SCORE, 1);
@@ -166,6 +171,13 @@ public class PlayScreen implements Screen {
         hud.update(dt);
 
         renderer.setView(gameCam);
+
+    }
+
+    private void gameOver() {
+
+        game.setScreen(new GameOverScreen(game, manager));
+        //dispose();
 
     }
 
@@ -193,7 +205,7 @@ public class PlayScreen implements Screen {
         player2.draw(game.sb);
         if (p1Scored) {
             if (playerScoredAnimationTimer > 0) {
-                game.sb.draw(p1ScoreTexture, (SuperPaddle.WIDTH / 2) - (p1ScoreTexture.getWidth() / 2), (SuperPaddle.HEIGHT / 2) - (p1ScoreTexture.getHeight() / 2));
+                game.sb.draw(p1ScoreTexture, ((SuperPaddle.WIDTH / 2) - (p1ScoreTexture.getWidth() / 2)) / SuperPaddle.PPM, ((SuperPaddle.HEIGHT / 2) - (p1ScoreTexture.getHeight() / 2)) / SuperPaddle.PPM, p1ScoreTexture.getWidth() / SuperPaddle.PPM, p1ScoreTexture.getHeight() / SuperPaddle.PPM);
                 playerScoredAnimationTimer -= dt;
             } else {
                 playerScoredAnimationTimer = SCORE_ANIMATION_TIME;
@@ -202,7 +214,7 @@ public class PlayScreen implements Screen {
         }
         if (p2Scored) {
             if (playerScoredAnimationTimer > 0) {
-                game.sb.draw(p2ScoreTexture, (SuperPaddle.WIDTH / 2) - (p2ScoreTexture.getWidth() / 2), (SuperPaddle.HEIGHT / 2) - (p2ScoreTexture.getHeight() / 2));
+                game.sb.draw(p2ScoreTexture, ((SuperPaddle.WIDTH / 2) - (p2ScoreTexture.getWidth() / 2)) / SuperPaddle.PPM, ((SuperPaddle.HEIGHT / 2) - (p2ScoreTexture.getHeight() / 2)) / SuperPaddle.PPM, p2ScoreTexture.getWidth() / SuperPaddle.PPM, p2ScoreTexture.getHeight() / SuperPaddle.PPM);
                 playerScoredAnimationTimer -= dt;
             } else {
                 playerScoredAnimationTimer = SCORE_ANIMATION_TIME;
@@ -249,6 +261,8 @@ public class PlayScreen implements Screen {
         p1ScoreTexture.dispose();
         p2ScoreTexture.dispose();
     }
+
+
 
     public World getWorld() {
         return world;

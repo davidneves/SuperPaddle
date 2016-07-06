@@ -18,6 +18,7 @@ public class Ball extends Sprite {
 
         super(new Texture("ball.png"));
         this.world = screen.getWorld();
+        setSize(this.getWidth() / SuperPaddle.PPM, this.getHeight() / SuperPaddle.PPM);
 
         defineBall();
 
@@ -33,19 +34,19 @@ public class Ball extends Sprite {
     }
 
     public boolean isGoalPlayer1() {
-        return (b2Body.getPosition().x > SuperPaddle.WIDTH);
+        return (b2Body.getPosition().x > SuperPaddle.WIDTH / SuperPaddle.PPM);
     }
 
     private void defineBall() {
 
         BodyDef bdef = new BodyDef();
-        bdef.position.set(SuperPaddle.WIDTH / 2, SuperPaddle.HEIGHT / 2);
+        bdef.position.set(SuperPaddle.WIDTH / 2 / SuperPaddle.PPM, SuperPaddle.HEIGHT / 2 / SuperPaddle.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(15);
+        shape.setRadius(15 / SuperPaddle.PPM);
         fdef.filter.categoryBits = SuperPaddle.BALL_BIT;
         fdef.filter.maskBits = SuperPaddle.BLOCK_BIT | SuperPaddle.EDGE_BIT | SuperPaddle.PADDLE_BIT;
 
@@ -59,4 +60,5 @@ public class Ball extends Sprite {
     public void resetBall(){
         defineBall();
     }
+
 }
