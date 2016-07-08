@@ -19,9 +19,12 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.superpaddle.SuperPaddle;
 import org.academiadecodigo.superpaddle.scenes.Hud;
 import org.academiadecodigo.superpaddle.sprites.Ball;
+import org.academiadecodigo.superpaddle.sprites.Block;
 import org.academiadecodigo.superpaddle.sprites.Paddle;
 import org.academiadecodigo.superpaddle.tools.B2WorldCreator;
 import org.academiadecodigo.superpaddle.tools.BallContactListener;
+
+import java.util.List;
 
 /**
  * Created by vi.KING David Neves on 04/07/16.
@@ -29,6 +32,7 @@ import org.academiadecodigo.superpaddle.tools.BallContactListener;
 public class PlayScreen implements Screen {
 
     private final float SCORE_ANIMATION_TIME = 1;
+    private final float WIN_NOTIFICATION_TIME = 3;
 
     private SuperPaddle game;
     private AssetManager manager;
@@ -38,6 +42,8 @@ public class PlayScreen implements Screen {
 
     private Texture p1ScoreTexture;
     private Texture p2ScoreTexture;
+    private Texture p1WinTexture;
+    private Texture p2WinTexture;
 
     private Hud hud;
 
@@ -56,6 +62,8 @@ public class PlayScreen implements Screen {
     private boolean p1Scored;
     private boolean p2Scored;
     private float playerScoredAnimationTimer;
+    private float playerWinAnimationTimer;
+    private List<Block> blocks;
 
 
     public PlayScreen(SuperPaddle game, AssetManager manager) {
@@ -64,6 +72,10 @@ public class PlayScreen implements Screen {
         this.manager = manager;
 
         init();
+    }
+
+    public void setBlocks(List<Block> blocks) {
+        this.blocks = blocks;
     }
 
     private void init() {
@@ -87,17 +99,17 @@ public class PlayScreen implements Screen {
         player1 = new Paddle(this, 40, 100, 1);
         player2 = new Paddle(this, SuperPaddle.WIDTH - 40, SuperPaddle.HEIGHT - 100, 2);
 
-
         world.setContactListener(new BallContactListener());
 
         p1ScoreTexture = new Texture("p1Score.png");
         p2ScoreTexture = new Texture("p2Score.png");
+        p1WinTexture = new Texture("player1_win.png");
+        p2WinTexture = new Texture("player2_win.png");
+        playerWinAnimationTimer = WIN_NOTIFICATION_TIME;
         playerScoredAnimationTimer = SCORE_ANIMATION_TIME;
 
 
-
     }
-
 
 
     public void handleInput(float dt) {
@@ -147,16 +159,23 @@ public class PlayScreen implements Screen {
 
     public void update(float dt) {
 
-        if (hud.isTimeUp()){
-            gameOver();
+        if (hud.isTimeUp()) {
+            setWinner(dt);
+        }
+        if (checkBlocksDestruction()) {
+            setWinner(dt);
+        }
+
+        for (Block block : blocks) {
+            if (block.isDestroyed()) {
+
+            }
         }
         handleInput(dt);
 
         world.step(1 / 60f, 6, 2);
 
         ball.update(dt);
-
-
 
 
         if (ball.isGoalPlayer1() && !p1Scored) {
@@ -174,6 +193,49 @@ public class PlayScreen implements Screen {
 
         renderer.setView(gameCam);
 
+    }
+
+    private void setWinner(float dt) {
+        int winner = 0;
+
+        if (Hud.scorePlayer1 > Hud.scorePlayer2) winner = 1;
+        if (Hud.scorePlayer2 > Hud.scorePlayer1) winner = 2;
+
+        if (winner == 2) {
+            if (playerWinAnimationTimer > 0) {
+                game.sb.begin();
+                game.sb.draw(p2WinTexture, ((SuperPaddle.WIDTH / 2) - (p2WinTexture.getWidth() / 2)) / SuperPaddle.PPM, ((SuperPaddle.HEIGHT / 2) - (p2WinTexture.getHeight() / 2)) / SuperPaddle.PPM, p2WinTexture.getWidth() / SuperPaddle.PPM, p2WinTexture.getHeight() / SuperPaddle.PPM);
+                game.sb.end();
+                playerWinAnimationTimer -= dt;
+            } else {
+                gameOver();
+            }
+        }
+        if (winner == 1) {
+            if (playerWinAnimationTimer > 0) {
+                game.sb.begin();
+                game.sb.draw(p1WinTexture, ((SuperPaddle.WIDTH / 2) - (p1WinTexture.getWidth() / 2)) / SuperPaddle.PPM, ((SuperPaddle.HEIGHT / 2) - (p1WinTexture.getHeight() / 2)) / SuperPaddle.PPM, p1WinTexture.getWidth() / SuperPaddle.PPM, p1WinTexture.getHeight() / SuperPaddle.PPM);
+                game.sb.end();
+                playerWinAnimationTimer -= dt;
+            } else {
+                gameOver();
+            }
+        }
+        gameOver();
+    }
+
+    private boolean checkBlocksDestruction() {
+        int totalBlocks = blocks.size();
+        int destroyedBlocksCounter = 0;
+        for (Block block : blocks) {
+            if (block.isDestroyed()) {
+                destroyedBlocksCounter++;
+            }
+        }
+        if (destroyedBlocksCounter == totalBlocks) {
+            return true;
+        }
+        return false;
     }
 
     private void gameOver() {
@@ -205,7 +267,6 @@ public class PlayScreen implements Screen {
         ball.draw(game.sb);
         player1.draw(game.sb);
         player2.draw(game.sb);
-
 
 
         if (p1Scored) {
@@ -269,7 +330,6 @@ public class PlayScreen implements Screen {
         p1ScoreTexture.dispose();
         p2ScoreTexture.dispose();
     }
-
 
 
     public World getWorld() {

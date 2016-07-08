@@ -10,6 +10,9 @@ import org.academiadecodigo.superpaddle.SuperPaddle;
 import org.academiadecodigo.superpaddle.screens.PlayScreen;
 import org.academiadecodigo.superpaddle.sprites.Block;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by vi.KING David Neves on 04/07/16.
  */
@@ -26,6 +29,7 @@ public class B2WorldCreator {
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
+        List<Block> blocks = new LinkedList<Block>();
 
 
 
@@ -47,9 +51,11 @@ public class B2WorldCreator {
 
         for (MapObject object : map.getLayers().get(5 ).getObjects().getByType(RectangleMapObject.class)) {
 
-            new Block(screen, object);
+            blocks.add(new Block(screen, object));
 
         }
+
+        screen.setBlocks(blocks);
     }
 
 

@@ -27,6 +27,11 @@ public class Block {
     private PlayScreen screen;
     private Fixture fixture;
     private MapObject object;
+    private boolean destroyed;
+
+    public boolean isDestroyed() {
+        return destroyed;
+    }
 
     private TiledMapTileSet tileSet;
 
@@ -73,6 +78,7 @@ public class Block {
         fixture.setFilterData(filter);
 
         getCell().setTile(null);
+        destroyed = true;
 
 
     }

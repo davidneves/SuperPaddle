@@ -19,14 +19,15 @@ public class Hud implements Disposable {
 
     private static Label scoreLabel1;
     private static Label scoreLabel2;
-    private static Integer scorePlayer1;
-    private static Integer scorePlayer2;
+    public static Integer scorePlayer1;
+    public static Integer scorePlayer2;
     public Stage stage;
     private Label countdownLabel;
     private Label timeLabel;
     private Label player1Label;
     private Label player2Label;
     private Viewport viewport;
+
     private Integer worldTimer;
     private float timeCount;
     private boolean timeUp;
