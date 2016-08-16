@@ -37,7 +37,7 @@ public class SuperPaddle extends Game {
         sb = new SpriteBatch();
 
         manager = new AssetManager();
-        manager.load("audio/music.mp3", Music.class);
+        manager.load("music.mp3", Music.class);
         manager.finishLoading();
 
         setScreen(new MenuScreen(this, manager));
@@ -57,6 +57,8 @@ public class SuperPaddle extends Game {
         sb.dispose();
     }
 }
+
+//TODO: Fix path to path variables on assets
 //TODO: add warning before game over screen saying which player won
 //TODO: move paddles with touch thingy
 //TODO: add networking! --> implement server-client model
