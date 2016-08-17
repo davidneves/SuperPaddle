@@ -22,7 +22,7 @@ public class SuperPaddle extends Game {
     public static final int BLOCK_SCORE = 25;
     public static final float BALL_SPEED = 4f;
     public static final float PADDLE_SPEED = 7f;
-    public static final Integer GAME_TIME_LENGHT_DURATION = 120;
+    public static final Integer GAME_TIME_LENGHT_DURATION = 180;
 
     public static final float BALL_RADIUS = 12.5f;
 
